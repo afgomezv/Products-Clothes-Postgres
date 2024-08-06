@@ -41,6 +41,15 @@ export class Product {
     @Column('text')
     gender: string
 
+    // todo: tags
+    @Column("text", {
+        array: true,
+        default: []
+    })
+    tags: string[]
+    
+    // todo: images
+
     @BeforeInsert()
     checkSlugInsert(){
         
@@ -54,8 +63,13 @@ export class Product {
             .replaceAll("'", "")
     }
 
-    //@BeforeUpdate()
+    @BeforeUpdate()
+    checkSlugUpdate(){
 
-    // todo: tags
-    // todo: images
+        this.slug = this.slug
+            .toLowerCase()
+            .replaceAll(" ", "_")
+            .replaceAll("'", "")
+    }
+
 }
